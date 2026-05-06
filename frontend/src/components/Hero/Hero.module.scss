@@ -1,0 +1,76 @@
+@use '../../styles/variables' as *;
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 64px;
+}
+
+.inner {
+  padding-top: $space-xl;
+  padding-bottom: $space-xl;
+}
+
+.meta {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+  margin-bottom: $space-lg;
+
+  span {
+    font-size: 10px;
+    color: $stone;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    &:first-child {
+      padding-right: $space-md;
+      border-right: 0.5px solid $border;
+    }
+  }
+}
+
+.title {
+  font-family: $font-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  color: $text;
+  line-height: 1.1;
+  margin-bottom: $space-lg;
+
+  em {
+    font-style: italic;
+    color: $ash;
+  }
+}
+
+.line {
+  width: 32px;
+  height: 0.5px;
+  background-color: $ink;
+  margin-bottom: $space-lg;
+}
+
+.desc {
+  font-size: $size-sm;
+  color: $text-muted;
+  line-height: 1.8;
+  max-width: 380px;
+  margin-bottom: $space-xl;
+}
+
+.cta {
+  font-size: 11px;
+  color: $text;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid $ink;
+  padding-bottom: 2px;
+  transition: $transition;
+
+  &:hover {
+    color: $text-muted;
+    border-color: $ash;
+  }
+}
