@@ -1,0 +1,149 @@
+@use '../../styles/variables' as *;
+
+.contact {
+  border-top: 0.5px solid $border;
+}
+
+.inner {
+  padding-top: $space-2xl;
+  padding-bottom: $space-2xl;
+}
+
+.header {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+  margin-bottom: $space-xl;
+
+  span {
+    font-size: 10px;
+    color: $stone;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .index {
+    padding-right: $space-md;
+    border-right: 0.5px solid $border;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.title {
+  font-family: $font-serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: $text;
+  margin-bottom: $space-md;
+
+  em {
+    font-style: italic;
+    color: $ash;
+  }
+}
+
+.desc {
+  font-size: $size-sm;
+  color: $text-muted;
+  line-height: 1.8;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+
+  label {
+    font-size: 10px;
+    color: $stone;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  input,
+  textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 0.5px solid $border;
+    padding: $space-xs 0;
+    font-family: $font-sans;
+    font-size: $size-sm;
+    font-weight: 300;
+    color: $text;
+    outline: none;
+    transition: $transition;
+    resize: none;
+
+    &:focus {
+      border-color: $ink;
+    }
+
+    &::placeholder {
+      color: $stone;
+    }
+  }
+}
+
+.submit {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: $font-sans;
+  font-size: 11px;
+  font-weight: 400;
+  color: $text;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid $ink;
+  padding-bottom: 2px;
+  transition: $transition;
+
+  &:hover {
+    color: $text-muted;
+    border-color: $ash;
+  }
+
+  &:disabled {
+    color: $stone;
+    border-color: $border;
+    cursor: not-allowed;
+  }
+}
+
+.success {
+  p {
+    font-size: $size-sm;
+    color: $text-muted;
+    line-height: 1.8;
+  }
+
+  p:first-child {
+    font-family: $font-serif;
+    font-size: $size-xl;
+    font-weight: 300;
+    color: $text;
+    margin-bottom: $space-xs;
+  }
+}
+
+.error {
+  font-size: $size-sm;
+  color: $ash;
+}
