@@ -1,0 +1,95 @@
+@use '../../styles/variables' as *;
+
+.skills {
+  border-top: 0.5px solid $border;
+}
+
+.inner {
+  padding-top: $space-2xl;
+  padding-bottom: $space-2xl;
+}
+
+.header {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+  margin-bottom: $space-xl;
+
+  span {
+    font-size: 10px;
+    color: $stone;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .index {
+    padding-right: $space-md;
+    border-right: 0.5px solid $border;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-lg;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.group {
+  padding-top: $space-sm;
+  border-top: 0.5px solid $border;
+}
+
+.category {
+  font-size: 10px;
+  color: $stone;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: $space-md;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: $size-sm;
+  color: $text-muted;
+  line-height: 1.6;
+
+  &::before {
+    content: '—';
+    margin-right: $space-xs;
+    color: $stone;
+    flex-shrink: 0;
+  }
+}
+
+.name {
+  flex: 1;
+}
+
+.notions {
+  font-size: 10px;
+  color: $stone;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 0.5px solid $border;
+  padding: 1px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
