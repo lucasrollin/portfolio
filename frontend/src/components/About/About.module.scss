@@ -1,0 +1,93 @@
+@use '../../styles/variables' as *;
+
+.about {
+  border-top: 0.5px solid $border;
+}
+
+.inner {
+  padding-top: $space-2xl;
+  padding-bottom: $space-2xl;
+}
+
+.header {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+  margin-bottom: $space-xl;
+
+  span {
+    font-size: 10px;
+    color: $stone;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .index {
+    padding-right: $space-md;
+    border-right: 0.5px solid $border;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.title {
+  font-family: $font-serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: $text;
+  position: sticky;
+  top: $space-xl;
+
+  em {
+    font-style: italic;
+    color: $ash;
+  }
+}
+
+.right {
+  p {
+    font-size: $size-sm;
+    color: $text-muted;
+    line-height: 1.8;
+    margin-bottom: $space-md;
+  }
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  margin-top: $space-lg;
+  padding-top: $space-lg;
+  border-top: 0.5px solid $border;
+}
+
+.fact {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: $space-sm;
+  border-bottom: 0.5px solid $fog;
+}
+
+.factValue {
+  font-size: $size-sm;
+  color: $text;
+  font-weight: 400;
+}
+
+.factLabel {
+  font-size: 11px;
+  color: $stone;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
