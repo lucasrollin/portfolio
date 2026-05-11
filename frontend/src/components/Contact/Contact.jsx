@@ -20,7 +20,7 @@ function Contact() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful, submitCount },
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -32,7 +32,12 @@ function Contact() {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error();
+    if (res.status === 429) {
+      throw new Error('rate_limit');
+    }
+
+    if (!res.ok) throw new Error('server_error');
+
     reset();
   }
 
@@ -87,6 +92,11 @@ function Contact() {
                     </span>
                   )}
                 </div>
+                {submitCount > 0 && !isSubmitSuccessful && !isSubmitting && (
+                  <p className={styles.error}>
+                    Une erreur est survenue. Réessayez dans quelques minutes.
+                  </p>
+                )}
                 <button
                   type="submit"
                   className={styles.submit}
