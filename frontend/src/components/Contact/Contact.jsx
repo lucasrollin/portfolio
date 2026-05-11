@@ -1,33 +1,39 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import styles from './Contact.module.scss';
 
-const INITIAL_STATE = { name: '', email: '', message: '' };
+const schema = z.object({
+  name: z
+    .string()
+    .min(2, 'Le nom doit contenir au moins 2 caractères')
+    .max(50, 'Le nom ne peut pas dépasser 50 caractères'),
+  email: z.string().email('Adresse email invalide'),
+  message: z
+    .string()
+    .min(10, 'Le message doit contenir au moins 10 caractères')
+    .max(1000, 'Le message ne peut pas dépasser 1000 caractères'),
+});
 
 function Contact() {
-  const [form, setForm] = useState(INITIAL_STATE);
-  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
+  async function onSubmit(data) {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setStatus('loading');
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-
-      if (!res.ok) throw new Error();
-      setStatus('success');
-      setForm(INITIAL_STATE);
-    } catch {
-      setStatus('error');
-    }
+    if (!res.ok) throw new Error();
+    reset();
   }
 
   return (
@@ -51,57 +57,42 @@ function Contact() {
             </p>
           </div>
           <div className={styles.right}>
-            {status === 'success' ? (
+            {isSubmitSuccessful ? (
               <div className={styles.success}>
                 <p>Message envoyé.</p>
                 <p>Je vous répondrai dans les plus brefs délais.</p>
               </div>
             ) : (
-              <form className={styles.form} onSubmit={handleSubmit}>
+              <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.field}>
                   <label htmlFor="name">Nom</label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input id="name" type="text" {...register('name')} />
+                  {errors.name && (
+                    <span className={styles.error}>{errors.name.message}</span>
+                  )}
                 </div>
                 <div className={styles.field}>
                   <label htmlFor="email">Email</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
+                  <input id="email" type="email" {...register('email')} />
+                  {errors.email && (
+                    <span className={styles.error}>{errors.email.message}</span>
+                  )}
                 </div>
                 <div className={styles.field}>
                   <label htmlFor="message">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    required
-                  />
+                  <textarea id="message" rows={5} {...register('message')} />
+                  {errors.message && (
+                    <span className={styles.error}>
+                      {errors.message.message}
+                    </span>
+                  )}
                 </div>
-                {status === 'error' && (
-                  <p className={styles.error}>
-                    Une erreur est survenue. Réessayez.
-                  </p>
-                )}
                 <button
                   type="submit"
                   className={styles.submit}
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                 >
-                  {status === 'loading' ? 'Envoi...' : 'Envoyer'}
+                  {isSubmitting ? 'Envoi...' : 'Envoyer'}
                 </button>
               </form>
             )}
