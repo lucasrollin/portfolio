@@ -52,6 +52,10 @@
     &:hover {
       color: $text;
     }
+
+    &.active {
+      color: $text;
+    }
   }
 }
 
@@ -136,6 +140,11 @@
 
     &:hover {
       color: $text;
+    }
+
+    &.active {
+      color: $text;
+      font-style: italic;
     }
   }
 }

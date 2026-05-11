@@ -3,14 +3,36 @@ import { createPortal } from 'react-dom';
 import styles from './Navbar.module.scss';
 
 const links = [
-  { label: 'À propos', href: '#about' },
-  { label: 'Compétences', href: '#skills' },
-  { label: 'Projets', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'À propos', href: '#about', id: 'about' },
+  { label: 'Compétences', href: '#skills', id: 'skills' },
+  { label: 'Projets', href: '#projects', id: 'projects' },
+  { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const observers = [];
+
+    links.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { threshold: 0.3 },
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   useEffect(() => {
     function handleResize() {
@@ -38,17 +60,20 @@ function Navbar() {
           <a href="#" className={styles.logo}>
             Lucas<span>.dev</span>
           </a>
-
           <nav className={styles.desktopNav}>
             <ul className={styles.links}>
               {links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                  <a
+                    href={link.href}
+                    className={activeSection === link.id ? styles.active : ''}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
           </nav>
-
           <button
             className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
             onClick={() => setIsOpen(!isOpen)}
@@ -70,7 +95,11 @@ function Navbar() {
           <ul>
             {links.map((link) => (
               <li key={link.href}>
-                <a href={link.href} onClick={handleLinkClick}>
+                <a
+                  href={link.href}
+                  className={activeSection === link.id ? styles.active : ''}
+                  onClick={handleLinkClick}
+                >
                   {link.label}
                 </a>
               </li>
