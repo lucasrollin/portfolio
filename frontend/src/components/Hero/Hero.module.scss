@@ -10,6 +10,10 @@
 .inner {
   padding-top: $space-xl;
   padding-bottom: $space-xl;
+  @media (max-width: 768px) {
+    padding-top: $space-md;
+    padding-bottom: $space-md;
+  }
 }
 
 .meta {
