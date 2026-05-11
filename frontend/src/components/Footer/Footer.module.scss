@@ -1,0 +1,51 @@
+@use '../../styles/variables' as *;
+
+.footer {
+  border-top: 0.5px solid $border;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    padding-top: $space-md;
+    padding-bottom: $space-md;
+    gap: $space-sm;
+  }
+}
+
+.name {
+  font-family: $font-serif;
+  font-size: $size-md;
+  font-weight: 400;
+  color: $text;
+  letter-spacing: 0.04em;
+}
+
+.links {
+  display: flex;
+  gap: $space-lg;
+
+  a {
+    font-size: 11px;
+    color: $text-muted;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: $transition;
+
+    &:hover {
+      color: $text;
+    }
+  }
+}
+
+.copy {
+  font-size: 11px;
+  color: $stone;
+  letter-spacing: 0.08em;
+}
